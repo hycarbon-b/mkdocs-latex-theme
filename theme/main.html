@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="{{ config.theme.locale | default('en', true) }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page and page.title %}{{ page.title | striptags }} — {% endif %}{{ config.site_name }}</title>
+  {% if config.site_description %}<meta name="description" content="{{ config.site_description }}">{% endif %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vsalvino/computer-modern@main/fonts/serif.css">
+  <link rel="stylesheet" href="{{ 'assets/theme.css' | url }}">
+  {% for path in config.extra_css %}<link rel="stylesheet" href="{{ path | url }}">{% endfor %}
+  <script>window.MathJax = {tex: {inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']]}, options: {skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']}};</script>
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+<div class="layout">
+  <aside class="sidebar" id="sidebar" aria-label="Contents">
+    <div class="sidebar-inner">
+      <a class="site-title" href="{{ nav.homepage.url | url }}">{{ config.site_name }}</a>
+      <div class="contents-label">Contents</div>
+      {% macro render_items(items) %}
+      <ul class="nav-list">
+        {% for item in items %}
+        <li>
+          {% if item.is_section %}
+          <details{% if item.active %} open{% endif %}>
+            <summary>{{ item.title }}</summary>
+            {{ render_items(item.children) }}
+          </details>
+          {% else %}
+          <a class="nav-link{% if item.active %} active{% endif %}" href="{{ item.url | url }}"{% if item.active %} aria-current="page"{% endif %}>{{ item.title }}</a>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      {% endmacro %}
+      <nav aria-label="Document contents">{{ render_items(nav) }}</nav>
+    </div>
+  </aside>
+  <main id="content" class="main-content">
+    <details class="mobile-contents"><summary>Contents</summary><nav aria-label="Document contents">{{ render_items(nav) }}</nav></details>
+    <article class="article">{{ page.content }}</article>
+  </main>
+</div>
+{% for script in config.extra_javascript %}{{ script | script_tag }}{% endfor %}
+</body>
+</html>

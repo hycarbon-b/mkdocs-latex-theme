@@ -1,0 +1,21 @@
+site_name: Notes on Mathematics
+site_description: A sample mathematical text
+nav:
+  - Preface: index.md
+  - '1: Preliminaries':
+      - '1.1: A Short Note on Proofs': chapters/proofs.md
+      - '1.2: Sets and Equivalence Relations': chapters/sets.md
+  - '2: The Integers': chapters/integers.md
+theme:
+  name: null
+  custom_dir: theme
+markdown_extensions:
+  - toc:
+      permalink: true
+  - admonition
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.superfences
+  - pymdownx.highlight
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
