@@ -21,8 +21,14 @@
       <ul class="nav-list toc-list">
         {% for item in items %}
         <li>
+          {% if item.children %}
+          <details>
+            <summary><a class="nav-link" href="{{ item.url }}">{{ item.title }}</a></summary>
+            {{ render_toc(item.children) }}
+          </details>
+          {% else %}
           <a class="nav-link" href="{{ item.url }}">{{ item.title }}</a>
-          {% if item.children %}{{ render_toc(item.children) }}{% endif %}
+          {% endif %}
         </li>
         {% endfor %}
       </ul>
@@ -37,14 +43,21 @@
             {{ render_items(item.children) }}
           </details>
           {% else %}
-          <a class="nav-link{% if item.active %} active{% endif %}" href="{{ item.url | url }}"{% if item.active %} aria-current="page"{% endif %}>{{ item.title }}</a>
           {% if item.active and page.toc %}
             {% set headings = page.toc | list %}
             {% if headings | length == 1 and headings[0].level == 1 and headings[0].title == page.title %}
-              {{ render_toc(headings[0].children) }}
-            {% else %}
-              {{ render_toc(headings) }}
+              {% set headings = headings[0].children %}
             {% endif %}
+          {% else %}
+            {% set headings = [] %}
+          {% endif %}
+          {% if headings %}
+          <details open>
+            <summary><a class="nav-link active" href="{{ item.url | url }}" aria-current="page">{{ item.title }}</a></summary>
+            {{ render_toc(headings) }}
+          </details>
+          {% else %}
+          <a class="nav-link{% if item.active %} active{% endif %}" href="{{ item.url | url }}"{% if item.active %} aria-current="page"{% endif %}>{{ item.title }}</a>
           {% endif %}
           {% endif %}
         </li>

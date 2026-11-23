@@ -21,6 +21,7 @@ a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outli
 .nav-link:hover, .nav-list summary:hover { color: var(--accent); }
 .nav-link.active { color: var(--accent); font-weight: bold; }
 .nav-list summary { display: flex; cursor: pointer; list-style: none; gap: .45rem; }
+.nav-list summary > .nav-link { min-width: 0; padding: 0; }
 .nav-list summary::-webkit-details-marker { display: none; }
 .nav-list summary::before { content: '+'; width: .7rem; flex: 0 0 .7rem; color: #888; font-family: sans-serif; font-weight: 400; }
 .nav-list details[open] > summary::before { content: '−'; }
