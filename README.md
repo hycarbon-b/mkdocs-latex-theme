@@ -10,4 +10,4 @@ Install MkDocs and PyMdown Extensions (`pip install mkdocs pymdown-extensions`),
 
 Point `theme.custom_dir` to the `theme` directory in this repository and use `theme.name: null`. Enable `pymdownx.arithmatex` with `generic: true` and include MathJax in `extra_javascript`; see the included `mkdocs.yml` for a complete configuration. Use `$...$` for inline math and `$$...$$` for display math. MathJax and the font CDN require network access.
 
-The example content is for preview only. This is an independent theme; it does not change the host application's current Material preview configuration.
+The example content is for preview only. When used with Share MD, select LaTeX in the view settings before building.
