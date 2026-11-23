@@ -17,6 +17,16 @@
     <div class="sidebar-inner">
       <a class="site-title" href="{{ nav.homepage.url | url }}">{{ config.site_name }}</a>
       <div class="contents-label">Contents</div>
+      {% macro render_toc(items) %}
+      <ul class="nav-list toc-list">
+        {% for item in items %}
+        <li>
+          <a class="nav-link" href="{{ item.url }}">{{ item.title }}</a>
+          {% if item.children %}{{ render_toc(item.children) }}{% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      {% endmacro %}
       {% macro render_items(items) %}
       <ul class="nav-list">
         {% for item in items %}
@@ -28,6 +38,14 @@
           </details>
           {% else %}
           <a class="nav-link{% if item.active %} active{% endif %}" href="{{ item.url | url }}"{% if item.active %} aria-current="page"{% endif %}>{{ item.title }}</a>
+          {% if item.active and page.toc %}
+            {% set headings = page.toc | list %}
+            {% if headings | length == 1 and headings[0].level == 1 and headings[0].title == page.title %}
+              {{ render_toc(headings[0].children) }}
+            {% else %}
+              {{ render_toc(headings) }}
+            {% endif %}
+          {% endif %}
           {% endif %}
         </li>
         {% endfor %}
